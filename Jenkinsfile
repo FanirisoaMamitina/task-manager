@@ -2,16 +2,17 @@ pipeline {
 
     agent any
 
-    stages {
+    tools {
+        jdk 'JDK-17'
+        maven 'Maven-3.9'
+    }
 
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
+    stages {
 
         stage('Test') {
             steps {
+                bat 'java -version'
+                bat 'mvn -version'
                 bat 'mvn test'
             }
         }
