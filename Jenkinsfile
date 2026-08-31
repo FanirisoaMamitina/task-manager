@@ -11,8 +11,6 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'java -version'
-                bat 'mvn -version'
                 bat 'mvn test'
             }
         }
@@ -20,6 +18,16 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'mvn package -DskipTests'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat '''
+                    if not exist "C:\\Deploy\\task-manager" mkdir "C:\\Deploy\\task-manager"
+
+                    copy /Y "target\\task-manager-1.0-SNAPSHOT.jar" "C:\\Deploy\\task-manager\\task-manager.jar"
+                '''
             }
         }
     }
